@@ -7,18 +7,18 @@ import (
 
 const timeFormat = "2006-02-01::3:04PM"
 
-type TimeFormatColor struct {
-	Year  Attribute
-	Sep   Attribute // separator ::
-	Date  Attribute
-	Style Attribute
+type TimeStyle struct {
+	YearColor Attribute
+	SepColor  Attribute // separator ::
+	DateColor Attribute
+	Style     Attribute
 }
 
-func (t *TimeFormatColor) getTimeColorFormat(time string) string {
+func (t *TimeStyle) getTimeColorFormat(time string) string {
 	timeSplit := strings.Split(time, "::")
-	year := GetColorFormat(t.Year, t.Style, timeSplit[0])
-	date := GetColorFormat(t.Date, t.Style, timeSplit[1])
-	sep := GetColorFormat(t.Sep, t.Style, "::")
+	year := GetColorFormat(t.YearColor, t.Style, timeSplit[0])
+	date := GetColorFormat(t.DateColor, t.Style, timeSplit[1])
+	sep := GetColorFormat(t.SepColor, t.Style, "::")
 
 	result := strings.Join([]string{year, date}, sep) + sep
 	return result
@@ -29,16 +29,14 @@ func getTimeNowFormat() string {
 	return time.Now().UTC().Format(timeFormat)
 }
 
-func getColorTime(time string) string {
-
-	timeColor := TimeFormatColor{
-		Year:  Blue,
-		Sep:   Yellow,
-		Date:  White,
-		Style: Faint,
+func NewTimeStyle() string {
+	time := getTimeNowFormat()
+	timeColor := TimeStyle{
+		YearColor: Blue,
+		SepColor:  Yellow,
+		DateColor: White,
+		Style:     Faint,
 	}
 
-	time = timeColor.getTimeColorFormat(time)
-
-	return time
+	return timeColor.getTimeColorFormat(time)
 }
