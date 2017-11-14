@@ -3,36 +3,41 @@ package logger
 import (
 	"fmt"
 	"log"
-	"time"
 )
 
-const timeFormat = "2006-01-02::3:04PM::"
-
+// this is for customize the output format time
 type logWriter struct{}
 
 // this is for customize the output format time
 func (writer logWriter) Write(bytes []byte) (int, error) {
-	return fmt.Print(time.Now().UTC().Format(timeFormat) + string(bytes))
+	timeFormatted := getColorTime(getTimeNowFormat()) + string(bytes)
+	return fmt.Print(timeFormatted)
 }
 
 func Debug(prefix, message string) {
 
-	timeNow := getTimeFormat()
-
 	// setup log
 	log.SetFlags(0)
 	log.SetOutput(new(logWriter))
-	log.Println(prefix + message)
+	debugMessage := getDebugColor(prefix, message)
+	log.Println(debugMessage)
 
 	//set logger file output
 	dir := currentDir()
 	loggerFileName := getFileName()
 	file := createLogFile(dir, loggerFileName)
 	defer file.Close()
-	file.WriteString(timeNow + prefix + message + "\n")
+	file.WriteString(getColor(getTimeNowFormat(), prefix, message) + "\n")
 }
 
-func getTimeFormat() string {
-	t := time.Now()
-	return t.Format(timeFormat)
+func getDebugColor(prefix, message string) string {
+	prefix = GetColorFormat(Magenta, Faint, prefix)
+	message = GetColorFormat(Yellow, Faint, message)
+	return prefix + message
+}
+
+func getColor(time, prefix, message string) string {
+	time = getColorTime(time)
+	debugMessage := getDebugColor(prefix, message)
+	return time + debugMessage
 }
