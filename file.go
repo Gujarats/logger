@@ -5,6 +5,17 @@ import (
 	"path/filepath"
 )
 
+func saveDebugMessage(timeStyle, debugStyle string) {
+	dir := currentDir()
+	loggerFileName := getFileName()
+	file := createLogFile(dir, loggerFileName)
+	defer file.Close()
+	_, err := file.WriteString(timeStyle + debugStyle + "\n")
+	if err != nil {
+		panic(err)
+	}
+}
+
 // carefull with the permision if we got permission denied will loop forever
 func createLogFile(filePath, fileName string) *os.File {
 	f, err := os.OpenFile(filePath+fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModePerm)
