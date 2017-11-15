@@ -46,4 +46,4 @@ func init() {
 logger.Debug("prefix :: ", "Hello World logger")
 ```
 
-[![Example Output Custom](resource/custom_logger.png)]()
+[![Example Output Custom](resource/custom_logger2.png)]()
