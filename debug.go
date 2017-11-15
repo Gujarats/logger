@@ -14,10 +14,16 @@ func (d *DebugStyle) getDebugColorFormat(prefix, message string) string {
 }
 
 func NewDebugStyle(prefix, message string) string {
-	debug := DebugStyle{
-		PrefixColor:  Magenta,
-		MessageColor: Yellow,
-		Style:        Faint,
+	var debug DebugStyle
+	if EnableCustomColor {
+		debug = CustomColorStyle.DebugStyle
+	} else {
+		//default color
+		debug = DebugStyle{
+			PrefixColor:  Magenta,
+			MessageColor: Yellow,
+			Style:        Faint,
+		}
 	}
 
 	return debug.getDebugColorFormat(prefix, message)
