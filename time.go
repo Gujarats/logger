@@ -31,12 +31,19 @@ func getTimeNowFormat() string {
 
 func NewTimeStyle() string {
 	time := getTimeNowFormat()
-	timeColor := TimeStyle{
-		YearColor: Blue,
-		SepColor:  Yellow,
-		DateColor: White,
-		Style:     Faint,
+	var timeStyle TimeStyle
+
+	if EnableCustomColor {
+		timeStyle = CustomColorStyle.TimeStyle
+	} else {
+		//default color
+		timeStyle = TimeStyle{
+			YearColor: Blue,
+			SepColor:  Yellow,
+			DateColor: White,
+			Style:     Faint,
+		}
 	}
 
-	return timeColor.getTimeColorFormat(time)
+	return timeStyle.getTimeColorFormat(time)
 }
