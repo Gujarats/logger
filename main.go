@@ -5,7 +5,7 @@ import (
 )
 
 func Debug(prefix, message string) {
-
+	//Create debug message with default style
 	debugStyle := NewDebugStyle(prefix, message)
 	timeStyle := NewTimeStyle()
 
