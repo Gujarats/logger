@@ -21,3 +21,29 @@ This will output
 [![Example Output](resource/logger.png)]()
 
 That's it. it would print the log message with specific format time. And save it to a `logger,log` file
+
+## Customize color
+You can also set color as you like : 
+
+```go
+func init() {
+	debugStyle := logger.DebugStyle{
+		PrefixColor:  logger.Yellow,
+		MessageColor: logger.Blue,
+		Style:        logger.Underline,
+	}
+
+	timeStyle := logger.TimeStyle{
+		YearColor: logger.White,
+		SepColor:  logger.Yellow,
+		DateColor: logger.Cyan,
+		Style:     logger.Italic,
+	}
+	logger.NewCustomColor(debugStyle, timeStyle)
+}
+
+// you can call it anywhere direcly 
+logger.Debug("prefix :: ", "Hello World logger")
+```
+
+[![Example Output Custom](resource/custom_logger.png)]()
