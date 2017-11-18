@@ -20,8 +20,8 @@ func NewDebugStyle(prefix, message string) string {
 	} else {
 		//default color
 		debug = DebugStyle{
-			PrefixColor:  Magenta,
-			MessageColor: Yellow,
+			PrefixColor:  Yellow,
+			MessageColor: Cyan,
 			Style:        Faint,
 		}
 	}

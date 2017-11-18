@@ -38,9 +38,9 @@ func NewTimeStyle() string {
 	} else {
 		//default color
 		timeStyle = TimeStyle{
-			YearColor: Blue,
+			YearColor: White,
 			SepColor:  Yellow,
-			DateColor: White,
+			DateColor: Cyan,
 			Style:     Faint,
 		}
 	}
