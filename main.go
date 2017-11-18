@@ -1,13 +1,15 @@
 package logger
 
 import (
+	"fmt"
 	"log"
 )
 
 // Print Debug message and save that message into a file = logger.log
-func Debugf(prefix, message string) {
+func Debugf(prefix string, message ...interface{}) {
+	messageString := fmt.Sprintln(message...)
 	//Create debug message with default style
-	debugStyle := NewDebugStyle(prefix, message)
+	debugStyle := NewDebugStyle(prefix, messageString)
 	timeStyle := NewTimeStyle()
 
 	// setup log
@@ -19,9 +21,10 @@ func Debugf(prefix, message string) {
 }
 
 // Print debug message to os.StdOut without save it to a file
-func Debug(prefix, message string) {
+func Debug(prefix string, message ...interface{}) {
+	messageString := fmt.Sprintln(message...)
 	//Create debug message with default style
-	debugStyle := NewDebugStyle(prefix, message)
+	debugStyle := NewDebugStyle(prefix, messageString)
 
 	// setup log
 	log.SetFlags(0)
