@@ -18,6 +18,7 @@ func init() {
 }
 
 // Print Debug message and save that message into a file = logger.log
+// the file location logger.lo would be in the root of the project directory
 func Debugf(prefix string, message ...interface{}) {
 	messageString := fmt.Sprintln(message...)
 
