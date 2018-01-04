@@ -7,6 +7,6 @@ type customWriter struct{}
 
 // this is for customize the output format time
 func (writer *customWriter) Write(bytes []byte) (int, error) {
-	timeFormatted := NewTimeStyle() + string(bytes)
-	return fmt.Print(timeFormatted)
+	messageFormatted := NewTimeStyle() + string(bytes)
+	return fmt.Print(messageFormatted)
 }
