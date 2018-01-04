@@ -20,7 +20,17 @@ This will output
 
 [![Example Output](resource/logger.png)]()
 
-That's it. it would print the log message with specific format time. And save it to a `logger,log` file
+That's it. it would print the log message with specific format time. And save it to a `logger,log` file.
+### Output to file
+If you want to ouput the log to a file simple just add this function to your `func init` : 
+```go
+func init(
+...
+	logger.DebugToFile()
+...
+)
+
+```
 
 ## Customize color
 You can also set color as you like : 
