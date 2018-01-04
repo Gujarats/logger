@@ -16,7 +16,6 @@ var myLogger *log.Logger
 
 // setup log output to a file
 var FileSave bool
-var file *os.File
 
 func init() {
 	myLogger = log.New(os.Stdout, "", log.Lshortfile)
@@ -61,7 +60,7 @@ func Debugf(prefix string, format string, message ...interface{}) {
 func DebugToFile() {
 	dir := currentDir()
 	loggerFileName := getFileName()
-	file = createLogFile(dir, loggerFileName)
+	file := &CustomFile{createLogFile(dir, loggerFileName)}
 	myLogger.SetOutput(file)
 	FileSave = true
 }
