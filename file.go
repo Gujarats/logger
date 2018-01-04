@@ -5,6 +5,16 @@ import (
 	"path/filepath"
 )
 
+type CustomFile struct {
+	*os.File
+}
+
+func (c *CustomFile) Write(bytes []byte) (int, error) {
+	message := []byte(NewTimeStyle())
+	message = append(message, bytes...)
+	return c.File.Write(message)
+}
+
 func saveDebugMessage(timeStyle, debugStyle string) {
 	dir := currentDir()
 	loggerFileName := getFileName()
