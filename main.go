@@ -8,31 +8,18 @@ import (
 	"strconv"
 )
 
+// showing the line of code
 const calldepth = 2
 
 // setup logger
 var myLogger *log.Logger
 
+// setup log output to a file
+var FileSave bool
+var file *os.File
+
 func init() {
-	myLogger = log.New(os.Stderr, "", log.Lshortfile)
-}
-
-// Print Debug message and save that message into a file = logger.log
-// the file location logger.lo would be in the root of the project directory
-func Debugf(prefix string, message ...interface{}) {
-	messageString := fmt.Sprintln(message...)
-
-	//Create debug message with default style
-	debugStyle := NewDebugStyle(prefix, messageString)
-	timeStyle := NewTimeStyle()
-
-	// output logger
-	myLogger.SetOutput(new(customWriter))
-	myLogger.Output(calldepth, debugStyle)
-
-	// save output logger
-	lineError := getLineError()
-	saveDebugMessage(timeStyle, lineError+debugStyle)
+	myLogger = log.New(os.Stdout, "", log.Lshortfile)
 }
 
 func getLineError() string {
@@ -57,11 +44,31 @@ func getLineError() string {
 // Print debug message to os.StdOut without save it to a file
 func Debug(prefix string, message ...interface{}) {
 	messageString := fmt.Sprintln(message...)
-
-	//Create debug message with default style
 	debugStyle := NewDebugStyle(prefix, messageString)
-
-	// output logger
-	myLogger.SetOutput(new(customWriter))
+	outputLogger()
 	myLogger.Output(calldepth, debugStyle)
+}
+
+// Print debug message to os.StdOut without save it to a file with specific format
+func Debugf(prefix string, format string, message ...interface{}) {
+	messageString := fmt.Sprintf(format, message...)
+	debugStyle := NewDebugStyle(prefix, messageString)
+	outputLogger()
+	myLogger.Output(calldepth, debugStyle)
+}
+
+//Set the output to a file
+func DebugToFile() {
+	dir := currentDir()
+	loggerFileName := getFileName()
+	file = createLogFile(dir, loggerFileName)
+	myLogger.SetOutput(file)
+	FileSave = true
+}
+
+// define where the output should be display
+func outputLogger() {
+	if !FileSave {
+		myLogger.SetOutput(new(customWriter))
+	}
 }
